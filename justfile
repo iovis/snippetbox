@@ -12,7 +12,7 @@ full:
 
 # start the server
 dev:
-    go run .
+    go run ./cmd/web
 
 # open the project in the browser
 open:
