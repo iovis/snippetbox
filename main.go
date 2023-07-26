@@ -17,6 +17,13 @@ func main() {
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
+	// Go's paths are a "catch-all" so "/" would catch anything not
+	// caught before
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+
 	w.Write([]byte("Hello from Snippetbox"))
 }
 
