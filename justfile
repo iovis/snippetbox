@@ -28,4 +28,4 @@ test:
 
 # Open the DB
 db:
-    pgcli $DATABASE_URL
+    mycli $DATABASE_URL
