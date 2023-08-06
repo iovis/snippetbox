@@ -20,9 +20,18 @@ func (app *application) routes() http.Handler {
 	dynamicMiddleware := alice.New(app.sessionManager.LoadAndSave)
 
 	router.Handler(http.MethodGet, "/", dynamicMiddleware.ThenFunc(app.home))
+
+	// Snippets
 	router.Handler(http.MethodGet, "/snippet/view/:id", dynamicMiddleware.ThenFunc(app.snippetView))
 	router.Handler(http.MethodGet, "/snippet/create", dynamicMiddleware.ThenFunc(app.snippetCreate))
 	router.Handler(http.MethodPost, "/snippet/create", dynamicMiddleware.ThenFunc(app.snippetCreatePost))
+
+	// User
+	router.Handler(http.MethodGet, "/user/signup", dynamicMiddleware.ThenFunc(app.userSignup))
+	router.Handler(http.MethodPost, "/user/signup", dynamicMiddleware.ThenFunc(app.userSignupPost))
+	router.Handler(http.MethodGet, "/user/login", dynamicMiddleware.ThenFunc(app.userLogin))
+	router.Handler(http.MethodPost, "/user/login", dynamicMiddleware.ThenFunc(app.userLoginPost))
+	router.Handler(http.MethodPost, "/user/logout", dynamicMiddleware.ThenFunc(app.userLogoutPost))
 
 	standardMiddleware := alice.New(
 		app.recoverPanic,
