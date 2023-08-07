@@ -112,7 +112,28 @@ func (app *application) userSignup(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
-	panic("todo")
+	var form userSignupForm
+
+	err := app.decodePostForm(r, &form)
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
+
+	form.CheckField(form.NotBlank(form.Name), "name", "This field can't be blank")
+	form.CheckField(form.NotBlank(form.Email), "email", "This field can't be blank")
+	form.CheckField(form.Matches(form.Email, validator.EmailRX), "email", "This field must be a valid address")
+	form.CheckField(form.NotBlank(form.Password), "password", "This field can't be blank")
+	form.CheckField(form.MinChars(form.Password, 8), "password", "This field must be at least 8 characters long")
+
+	if !form.Valid() {
+		data := app.newTemplateData(r)
+		data.Form = form
+		app.render(w, http.StatusUnprocessableEntity, "signup.html", data)
+		return
+	}
+
+	panic("TODO: create user")
 }
 
 func (app *application) userLogin(w http.ResponseWriter, r *http.Request) {
