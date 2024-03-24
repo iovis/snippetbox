@@ -23,4 +23,11 @@ docs:
     tmux new-window -Sn docs 'python3 -m http.server -b 0.0.0.0 -d ~/Downloads/lets-go/html'
 
 db:
-    pgcli $DATABASE_URL
+    mycli $DATABASE_URL
+
+db_init:
+    cat db/migrations/*.sql | mycli $DATABASE_SERVER
+
+db_reset:
+    mycli $DATABASE_SERVER -e "drop database $DATABASE_NAME"
+    just db_init
