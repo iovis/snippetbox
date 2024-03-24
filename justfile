@@ -19,5 +19,8 @@ dev:
 test:
     go test
 
+docs:
+    tmux new-window -Sn docs 'python3 -m http.server -b 0.0.0.0 -d ~/Downloads/lets-go/html'
+
 db:
     pgcli $DATABASE_URL
