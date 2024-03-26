@@ -16,6 +16,9 @@ build:
 dev:
     watchexec -re go,html just run
 
+open:
+    open $PROJECT_URL
+
 test:
     go test
 

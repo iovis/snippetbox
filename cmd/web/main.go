@@ -6,16 +6,18 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"snippetbox/internal/models"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
 type application struct {
-	logger *slog.Logger
+	logger   *slog.Logger
+	snippets *models.SnippetModel
 }
 
 func main() {
-	addr := flag.String("addr", ":4000", "HTTP network address")
+	addr := flag.String("addr", "localhost:4000", "HTTP network address")
 
 	// NOTE: `parseTime=true` is for translating time DB objects to Go's `time`
 	dsn := flag.String("dsn", "root:password@/snippetbox?parseTime=true", "MySQL data source name")
@@ -31,7 +33,8 @@ func main() {
 	defer db.Close()
 
 	app := &application{
-		logger: logger,
+		logger:   logger,
+		snippets: &models.SnippetModel{DB: db},
 	}
 
 	logger.Info("Starting server", slog.String("addr", *addr))
