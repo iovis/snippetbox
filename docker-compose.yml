@@ -1,6 +1,6 @@
 version: '3.1'
 services:
-  postgres:
+  mysql:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
