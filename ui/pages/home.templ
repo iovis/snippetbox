@@ -1,0 +1,36 @@
+package pages
+
+import (
+	"fmt"
+	"snippetbox/internal/models"
+)
+
+templ Home(snippets []models.Snippet) {
+	@layout("Home", homePage(snippets))
+}
+
+templ homePage(snippets []models.Snippet) {
+	<h2>Latest Snippets</h2>
+	if len(snippets) > 0 {
+		<table>
+			<tr>
+				<th>Title</th>
+				<th>Created</th>
+				<th>ID</th>
+			</tr>
+			for _, snippet := range snippets {
+				<tr>
+					<td>
+						<a href={ templ.URL(fmt.Sprintf("/snippet/view/%d", snippet.ID)) }>
+							{ snippet.Title }
+						</a>
+					</td>
+					<td>{ humanDate(snippet.Created) }</td>
+					<td>#{ S(snippet.ID) }</td>
+				</tr>
+			}
+		</table>
+	} else {
+		<p>There's nothing to see here yet!</p>
+	}
+}

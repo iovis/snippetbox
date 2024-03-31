@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"snippetbox/internal/models"
+	"snippetbox/ui/pages"
 	"strconv"
 )
 
@@ -15,10 +16,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := app.newTemplateData(r)
-	data.Snippets = snippets
-
-	app.render(w, r, http.StatusOK, "home.html", data)
+	pages.Home(snippets).Render(r.Context(), w)
 }
 
 func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
@@ -39,10 +37,7 @@ func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := app.newTemplateData(r)
-	data.Snippet = snippet
-
-	app.render(w, r, http.StatusOK, "view.html", data)
+	pages.SnippetView(snippet).Render(r.Context(), w)
 }
 
 func (app *application) snippetCreate(w http.ResponseWriter, r *http.Request) {

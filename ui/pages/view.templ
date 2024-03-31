@@ -1,0 +1,27 @@
+package pages
+
+import (
+	"snippetbox/internal/models"
+)
+
+templ SnippetView(snippet models.Snippet) {
+	@layout("Snippet #%d", snippetViewPage(snippet))
+}
+
+templ snippetViewPage(snippet models.Snippet) {
+	<div class="snippet">
+		<div class="metadata">
+			<strong>{ snippet.Title }</strong>
+			<span>#{ S(snippet.ID) }</span>
+		</div>
+		<pre>
+			<code>
+				{ snippet.Content }
+			</code>
+		</pre>
+		<div class="metadata">
+			<time>Created: { humanDate(snippet.Created) }</time>
+			<time>Expires: { humanDate(snippet.Expires) }</time>
+		</div>
+	</div>
+}

@@ -7,14 +7,17 @@ default: run
 @list:
     just --list
 
-run:
+templ:
+    templ generate
+
+run: templ
     go run {{ bin }}
 
-build:
+build: templ
     go build {{ bin }}
 
 dev:
-    watchexec -re go,html just run
+    watchexec -re go,templ just run
 
 open:
     open $PROJECT_URL
