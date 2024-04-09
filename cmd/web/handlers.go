@@ -41,7 +41,7 @@ func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) snippetCreate(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Display a form for creating a snippet"))
+	pages.SnippetCreate().Render(r.Context(), w)
 }
 
 func (app *application) snippetCreatePost(w http.ResponseWriter, r *http.Request) {

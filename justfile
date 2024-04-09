@@ -17,6 +17,7 @@ build: templ
     go build {{ bin }}
 
 dev:
+    podman compose up -d --remove-orphans
     watchexec -re go,templ just run
 
 open:
