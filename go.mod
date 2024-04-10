@@ -3,7 +3,7 @@ module snippetbox
 go 1.22.1
 
 require (
-	github.com/a-h/templ v0.2.648
+	github.com/a-h/templ v0.2.663
 	github.com/go-sql-driver/mysql v1.8.0
 	github.com/justinas/alice v1.2.0
 )
