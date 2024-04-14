@@ -5,7 +5,7 @@ import (
 )
 
 templ SnippetView(snippet models.Snippet) {
-	@layout("Snippet #%d", snippetViewPage(snippet))
+	@layout(F("Snippet #%d", snippet.ID), snippetViewPage(snippet))
 }
 
 templ snippetViewPage(snippet models.Snippet) {

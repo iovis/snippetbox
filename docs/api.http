@@ -1,0 +1,14 @@
+# Home
+GET {{URL}}
+
+# View Snippet
+GET {{URL}}/snippet/view/1
+
+# Create Snippet
+GET {{URL}}/snippet/create
+
+# Create Snippet
+POST {{URL}}/snippet/create
+Content-Type: application/x-www-form-urlencoded
+
+title=title&content=content&expires=365

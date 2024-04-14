@@ -21,7 +21,7 @@ dev:
     watchexec -re go,templ just run
 
 open:
-    open $PROJECT_URL
+    open $URL
 
 test:
     go test
