@@ -1,24 +1,37 @@
 package pages
 
-templ SnippetCreate() {
-	@layout("Create a New Snippet", snippetCreatePage())
+import (
+	"snippetbox/internal/models"
+)
+
+templ SnippetCreate(form models.SnippetCreateForm) {
+	@layout("Create a New Snippet", snippetCreatePage(form))
 }
 
-templ snippetCreatePage() {
+templ snippetCreatePage(form models.SnippetCreateForm) {
 	<form method="POST" action="/snippet/create">
 		<div>
 			<label for="title">Title:</label>
-			<input type="text" name="title"/>
+			if title, ok := form.FieldErrors["title"]; ok {
+				<label class="error">{ title }</label>
+			}
+			<input type="text" name="title" value={ form.Title }/>
 		</div>
 		<div>
 			<label for="content">Content:</label>
-			<textarea type="text" name="content"></textarea>
+			if content, ok := form.FieldErrors["content"]; ok {
+				<label class="error">{ content }</label>
+			}
+			<textarea type="text" name="content">{ form.Content }</textarea>
 		</div>
 		<div>
 			<label for="expires">Delete in:</label>
-			<input type="radio" name="expires" value="365" checked/> One Year
-			<input type="radio" name="expires" value="7"/> One Week
-			<input type="radio" name="expires" value="1"/> One Day
+			if expires, ok := form.FieldErrors["expires"]; ok {
+				<label class="error">{ expires }</label>
+			}
+			<input type="radio" name="expires" value="365" checked?={ form.Expires == 365 }/> One Year
+			<input type="radio" name="expires" value="7" checked?={ form.Expires == 7 }/> One Week
+			<input type="radio" name="expires" value="1" checked?={ form.Expires == 1 }/> One Day
 		</div>
 		<div>
 			<input type="submit" value="Publish Snippet"/>

@@ -17,7 +17,7 @@ type application struct {
 }
 
 func main() {
-	addr := flag.String("addr", "0.0.0.0:4000", "HTTP network address")
+	addr := flag.String("addr", "localhost:4000", "HTTP network address")
 
 	// NOTE: `parseTime=true` is for translating time DB objects to Go's `time`
 	dsn := flag.String("dsn", "root:password@/snippetbox?parseTime=true", "MySQL data source name")

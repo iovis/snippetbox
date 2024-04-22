@@ -14,6 +14,13 @@ type Snippet struct {
 	Expires time.Time
 }
 
+type SnippetCreateForm struct {
+	Title       string
+	Content     string
+	Expires     int
+	FieldErrors map[string]string
+}
+
 type SnippetModel struct {
 	DB *sql.DB
 }
