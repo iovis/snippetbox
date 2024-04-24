@@ -8,12 +8,14 @@ import (
 	"os"
 	"snippetbox/internal/models"
 
+	"github.com/go-playground/form/v4"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 type application struct {
-	logger   *slog.Logger
-	snippets *models.SnippetModel
+	logger      *slog.Logger
+	snippets    *models.SnippetModel
+	formDecoder *form.Decoder
 }
 
 func main() {
@@ -33,8 +35,9 @@ func main() {
 	defer db.Close()
 
 	app := &application{
-		logger:   logger,
-		snippets: &models.SnippetModel{DB: db},
+		logger:      logger,
+		snippets:    &models.SnippetModel{DB: db},
+		formDecoder: form.NewDecoder(),
 	}
 
 	logger.Info("Starting server", slog.String("addr", *addr))
