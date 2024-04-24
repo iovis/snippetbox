@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"errors"
+	"snippetbox/internal/validator"
 	"time"
 )
 
@@ -15,10 +16,10 @@ type Snippet struct {
 }
 
 type SnippetCreateForm struct {
-	Title       string
-	Content     string
-	Expires     int
-	FieldErrors map[string]string
+	Title   string
+	Content string
+	Expires int
+	validator.Validator
 }
 
 type SnippetModel struct {
