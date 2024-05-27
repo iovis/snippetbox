@@ -7,15 +7,19 @@ import (
 	"net/http"
 	"os"
 	"snippetbox/internal/models"
+	"time"
 
+	"github.com/alexedwards/scs/mysqlstore"
+	"github.com/alexedwards/scs/v2"
 	"github.com/go-playground/form/v4"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 type application struct {
-	logger      *slog.Logger
-	snippets    *models.SnippetModel
-	formDecoder *form.Decoder
+	logger         *slog.Logger
+	snippets       *models.SnippetModel
+	formDecoder    *form.Decoder
+	sessionManager *scs.SessionManager
 }
 
 func main() {
@@ -34,10 +38,15 @@ func main() {
 	}
 	defer db.Close()
 
+	sessionManager := scs.New()
+	sessionManager.Store = mysqlstore.New(db)
+	sessionManager.Lifetime = 12 * time.Hour
+
 	app := &application{
-		logger:      logger,
-		snippets:    &models.SnippetModel{DB: db},
-		formDecoder: form.NewDecoder(),
+		logger:         logger,
+		snippets:       &models.SnippetModel{DB: db},
+		formDecoder:    form.NewDecoder(),
+		sessionManager: sessionManager,
 	}
 
 	logger.Info("Starting server", slog.String("addr", *addr))
